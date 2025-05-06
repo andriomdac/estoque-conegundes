@@ -29,7 +29,6 @@ Item_Produto = (
     quantidade em estoque,
     descrição particular (
         cada loja pode descrever seu produto da forma que quiser,
-        caso contrário, será utilizada a descrição geral
         ),
 
     dados da instância = (
@@ -41,9 +40,19 @@ Item_Produto = (
 
 
 Item_Produto_Preço = (
+    produto,
     preço de custo,
     preço de venda,
     lucro,
     data de criação,
 )
+
+Item_Produto_Preço é o valor do produto, haverá vários preços(Item_Produto_Preço) atrelados a um produto,
+sendo assim, será possível fazer um tracking de preços de tal produto ao longo do tempo.
+
+
+===============================================================================================
+
+
+
 

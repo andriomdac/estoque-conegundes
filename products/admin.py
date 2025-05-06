@@ -1,17 +1,26 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Brand
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     search_fields = [
         "name",
-        "description",
         "barcode",
         ]
     list_display = [
         "name",
-        "description",
-        "category",
         "brand",
         "barcode",
+        ]
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    search_fields = [
+        "id"
+        "name",
+        ]
+    list_display = [
+        "id",
+        "name",
         ]
