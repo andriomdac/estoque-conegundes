@@ -1,3 +1,7 @@
+import json
+from django.http import JsonResponse
+
+
 def serialize_model_list(model_class, exception_to_json_func, serializer_func, response):
     """
     Serializes a queryset of model instances into JSON response.
@@ -23,9 +27,6 @@ def serialize_model_list(model_class, exception_to_json_func, serializer_func, r
     Note:
         The response parameter is modified in-place by appending serialized data or errors.
     """
-    from django.http import JsonResponse
-
-
     try:
         objects = model_class.objects.all()
         for obj in objects:
@@ -38,7 +39,9 @@ def serialize_model_list(model_class, exception_to_json_func, serializer_func, r
 
 
 def get_json_from_request_body(request):
-    import json
+    """
+    Parses and returns JSON data from the HTTP request body.
+    """
     return json.loads(request.body.decode('utf-8'))
 
 
@@ -46,8 +49,5 @@ def method_not_allowed(response):
     """
     Return 405 (Method Not Allowed) to Response
     """
-    from django.http import JsonResponse
-
-    
     response.append({"error": "Method not allowed"})
     return JsonResponse(response, safe=False, status=405)

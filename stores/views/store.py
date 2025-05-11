@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Store
-from .utils import stores_exception_to_json
+from stores.models import Store
 from app.utils import serialize_model_list, method_not_allowed
 from stores.serializers import serialize_store
-from stores.utils import (
+from stores.utils.store import (
+    stores_exception_to_json,
     create_new_store,
     update_store,
     delete_store,

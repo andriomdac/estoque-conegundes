@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .models import Product
-from .models import Brand
+from products.models import Product
+from products.models import Brand
 from products.serializers import serialize_product
-from products.utils import (
+from products.utils.product import (
     products_exception_to_json,
     create_new_product,
     get_product_detail,

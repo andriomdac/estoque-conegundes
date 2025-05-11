@@ -1,10 +1,15 @@
+import json
+from django.http import JsonResponse
+from products.models import Product, Brand
+from products.serializers import serialize_product
+from app.utils import get_json_from_request_body
+from icecream import ic
+
+
 def products_exception_to_json(exception):
     """
     Converts raw exception messages into user-friendly JSON error responses.
     """
-    import json
-
-
     exception = str(exception)
     ERROR_MESSAGE_MAP = {
         "UNIQUE constraint failed: products_product.barcode": "Product with this barcode already exists",
@@ -24,13 +29,6 @@ def create_new_product(request, response):
     """
     Create (POST) new product based on request body
     """
-    from products.models import Product, Brand
-    from products.serializers import serialize_product
-    from django.http import JsonResponse
-    from products.utils import products_exception_to_json
-    from app.utils import get_json_from_request_body
-
-
     try:
         request_body = get_json_from_request_body(request)
         name = request_body['name']
@@ -58,12 +56,6 @@ def get_product_detail(response, product_id):
     """
     GET a single product
     """
-    from django.http import JsonResponse
-    from products.serializers import serialize_product
-    from products.utils import products_exception_to_json
-    from products.models import Product
-
-
     try:
         product = Product.objects.get(id=product_id)
         response.append(serialize_product(product))
@@ -78,13 +70,6 @@ def update_product(request, response, product_id):
     """
     Use request body data given to UPDATE the product based on product_id given
     """
-    from products.models import Product, Brand
-    from app.utils import get_json_from_request_body
-    from django.http import JsonResponse
-    from products.serializers import serialize_product
-    from icecream import ic
-    from products.utils import products_exception_to_json
-
     try:
         request_body = get_json_from_request_body(request)
         product = Product.objects.get(id=product_id)
@@ -104,11 +89,6 @@ def delete_product(response, product_id):
     """
     DELETE product based on id given
     """
-    from products.models import Product
-    from django.http import JsonResponse
-    from products.utils import products_exception_to_json
-
-
     try:
         product = Product.objects.get(id=product_id)
         product.delete()
@@ -116,4 +96,3 @@ def delete_product(response, product_id):
     except Exception as e:
         response.append(products_exception_to_json(e))
         return JsonResponse(response, safe=False, status=400)
-
