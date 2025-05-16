@@ -1,3 +1,11 @@
-from stores.db_models.store import *
-from stores.db_models.store_item import *
-from stores.db_models.price import *
+from django.db import models
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

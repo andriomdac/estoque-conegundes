@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Brand
+from .models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -11,16 +11,4 @@ class ProductAdmin(admin.ModelAdmin):
         "name",
         "brand",
         "barcode",
-        ]
-
-
-@admin.register(Brand)
-class BrandAdmin(admin.ModelAdmin):
-    search_fields = [
-        "id"
-        "name",
-        ]
-    list_display = [
-        "id",
-        "name",
         ]
