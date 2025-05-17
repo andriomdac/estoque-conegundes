@@ -8,9 +8,8 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('brands/', include('brands.urls')),
     path('categories/', include('categories.urls')),
-
-    
-#   path('store_items/', include('stores.urls.store_item')),
+    path('stores/', include('stores.urls')),
+    path('store_items/', include('store_items.urls')),
 #   path('prices/', include('stores.urls.price')),
 #   path('sales/', include('sales.urls.sale')),
 #   path('sale_items/', include('sales.urls.sale_item')),

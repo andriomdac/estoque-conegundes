@@ -21,3 +21,13 @@ def validate_product_name(name, brand):
     except DuplicateProductException:
         raise DuplicateProductException()
     return name
+
+
+def validate_product(product_id):
+    try:
+        product_id = int(product_id)
+    except TypeError:
+        raise ValueError("'product' (ID) must be an integer.")
+    if not Product.objects.filter(id=product_id).exists():
+        raise Product.DoesNotExist("Product with this ID does not exist.")
+    return Product.objects.get(id=product_id)

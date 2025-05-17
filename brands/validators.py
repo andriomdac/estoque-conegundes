@@ -10,3 +10,8 @@ def validate_brand(brand_id):
     except (ValueError, TypeError):
         raise ValueError("Brand ID must be a valid integer.")
     
+
+def validate_brand_name(name):
+    if Brand.objects.filter(name=name).exists():
+        raise ValueError("Brand with this name already exists.")
+    return name

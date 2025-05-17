@@ -5,11 +5,14 @@ from categories.serializers import serialize_category
 from app.utils.http import (
     get_json_from_request_body,
     build_json_response,
+    build_json_error_response,
     bad_request
     )
 from app.utils.db_ops import serialize_model_list
 from django.core.exceptions import ValidationError
 from django.db.models.deletion import ProtectedError
+from app.utils.validators import validate_request_body
+from .validators import validate_category_name
 
 
 def create_new_category(request, response):
@@ -17,28 +20,26 @@ def create_new_category(request, response):
     Create (POST) new category based on request body
     """
     try:
-        data = get_json_from_request_body(request)
-    except json.JSONDecodeError:
-        return build_json_response(response, {"error": "invalid request body"}, status=400)
+        data = validate_request_body(request, required_fields=['name'])
+    except ValueError as e:
+        return build_json_error_response(response, e, 400)
 
-    name = data.get('name')
-
-    if name:
-        new_category = Category.objects.create(
-            name=name
-        )
+    if 'name' in data:
+        try:
+            name = validate_category_name(data['name'])
+        except ValueError as e:
+            return build_json_error_response(response, e, 400)
+    
+    try:
+        new_category = Category(name=name)
         new_category.full_clean()
         new_category.save()
-        return build_json_response(response, serialize_category(new_category), status=201)
+        return build_json_response(response, serialize_category(new_category), 201)
+    except ValidationError as e:
+        return build_json_error_response(response, e, 400)
+    except Category.DoesNotExist as e:
+        return build_json_error_response(response, e, 404)
 
-    return build_json_response(
-        response,
-        {
-            "error": "Field 'name' invalid or missing.",
-            "expected structure": {
-                "name": "category_name"
-                }},
-        status=400)
 
 
 def update_category(request, response, category_id):
@@ -46,30 +47,24 @@ def update_category(request, response, category_id):
     Use request body data given to UPDATE the category based on category_id given
     """
     try:
-        data = get_json_from_request_body(request)
-    except json.JSONDecodeError:
-        return build_json_response(response, {"error": "invalid request body"}, status=400)
+        data = validate_request_body(request)
+    except ValueError as e:
+        return build_json_error_response(response, e, status=400)
 
-    new_name = data.get('name')
-
-    if not new_name:
-        return build_json_response(
-            response,
-            {
-                "error": "field 'name' required.",
-                "expected structure": {
-                    "name": "category_name"
-                    }},
-            status=400)
-
+    if 'name' in data:
+        try:
+            name = validate_category_name(data['name'])
+        except ValueError as e:
+            return build_json_error_response(response, e, 400)
+    
     try:
         category = Category.objects.get(id=category_id)
-        category.name = new_name
+        category.name = name
         category.full_clean()
         category.save()
         return build_json_response(response, serialize_category(category), 200)
 
     except ValidationError as e:
-        return build_json_response(response, {"error": e.message_dict}, status=400)
-    except Category.DoesNotExist:
-        return build_json_response(response, {"error": "Category not found."}, status=404)
+        return build_json_error_response(response, e, 400)
+    except Category.DoesNotExist as e:
+        return build_json_error_response(response, e, 404)

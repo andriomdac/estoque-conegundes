@@ -45,12 +45,11 @@ def create_new_product(request, response):
         return build_json_error_response(response, e, status=400)
 
     try:
-        new_product = Product.objects.create(
+        new_product = Product(
             name=name,
             brand=brand,
             barcode=barcode
         )
-
         new_product.full_clean()
         new_product.save()
         return build_json_response(response, serialize_product(new_product), status=201)

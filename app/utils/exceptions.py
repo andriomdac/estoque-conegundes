@@ -14,3 +14,7 @@ class DuplicateProductException(Exception):
     def __init__(self, message='Product with this name and brand already exists.'):
         super().__init__(message)
 
+class DuplicateStoreException(Exception):
+    """Raised when an store with the same name already exists."""
+    def __init__(self, message='Store with this name already exists.'):
+        super().__init__(message)
