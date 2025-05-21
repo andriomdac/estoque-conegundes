@@ -10,11 +10,8 @@ urlpatterns = [
     path('categories/', include('categories.urls')),
     path('stores/', include('stores.urls')),
     path('store_items/', include('store_items.urls')),
-#   path('prices/', include('stores.urls.price')),
-#   path('sales/', include('sales.urls.sale')),
-#   path('sale_items/', include('sales.urls.sale_item')),
-#   path('payment_methods/', include('sales.urls.payment_method')),
-#   path('stores/', include('stores.urls.store')),
-
-
+    path('prices/', include('prices.urls')),
+    path('sales/', include('sales.urls')),
+    path('payments/', include('payments.urls')),
+    path('sale_items/', include('sale_items.urls')),
 ]

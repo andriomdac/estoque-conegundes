@@ -1,6 +1,5 @@
 import json
-from brands.validators import *
-from products.validators import *
+from decimal import InvalidOperation, Decimal, ROUND_HALF_UP
 
 
 def validate_request_body(request, required_fields=None):

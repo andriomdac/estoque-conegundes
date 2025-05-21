@@ -1,5 +1,4 @@
 import json
-
 #Models
 from .models import StoreItem
 from products.models import Product
@@ -89,10 +88,11 @@ def update_store_item(request, response, store_item_id):
             return build_json_error_response(response, e, 404)
 
     try:
-        store_item = validate_store_item(StoreItem.objects.get(id=store_item_id))
+        store_item = StoreItem.objects.get(id=store_item_id)
+        store_item.category = category if category else  store_item.category
         store_item.full_clean()
         store_item.save()
-        return build_json_error_response(response, serialize_store_item(store_item), 200)
+        return build_json_response(response, serialize_store_item(store_item), 200)
     except (ValidationError, ValueError) as e:
         return build_json_error_response(response, e, 400)
     except StoreItem.DoesNotExist as e:
