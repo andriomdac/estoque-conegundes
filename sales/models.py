@@ -7,4 +7,4 @@ class Sale(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Venda {self.pk} criada em {self.created_at} - R$ {selftotal_amount}"
+        return f"Venda {self.pk} criada em {self.created_at} - R$ {self.total_amount}"

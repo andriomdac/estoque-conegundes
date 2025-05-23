@@ -1,10 +1,12 @@
+from sales.serializers import serialize_sale
+
 def serialize_payment_method(payment_method):
     """
     Transform a sale_item instance from a model to json
     """
     return {
         "id": payment_method.pk,
-        "method": payment_method.method.pk,
+        "method": serialize_payment_method_choice(payment_method.method),
         "sale": payment_method.sale.pk,
         "total_amount": payment_method.total_amount,
     }

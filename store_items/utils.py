@@ -11,8 +11,6 @@ from app.utils.http import build_json_error_response, build_json_response
 #Validators
 from app.utils.validators import validate_request_body
 from stores.validators import validate_store
-from products.validators import validate_product
-from categories.validators import validate_category
 from django.core.validators import ValidationError
 from .validators import validate_store_item
 

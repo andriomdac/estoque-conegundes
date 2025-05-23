@@ -1,5 +1,4 @@
 import json
-from django.http import JsonResponse
 from .models import Category
 from categories.serializers import serialize_category
 from app.utils.http import (
@@ -9,10 +8,17 @@ from app.utils.http import (
     bad_request
     )
 from app.utils.db_ops import serialize_model_list
-from django.core.exceptions import ValidationError
-from django.db.models.deletion import ProtectedError
-from app.utils.validators import validate_request_body
-from .validators import validate_category_name
+from app.utils.validators import (
+    validate_request_body,
+    validate_model_object_id,
+    validate_model_object_unique_name,
+    validate_and_save_model_object
+    )
+from app.utils.exceptions import (
+    FieldValidationError,
+    NotFoundValidationError,
+    ObjectValidationError
+    )
 
 
 def create_new_category(request, response):
@@ -21,50 +27,31 @@ def create_new_category(request, response):
     """
     try:
         data = validate_request_body(request, required_fields=['name'])
-    except ValueError as e:
-        return build_json_error_response(response, e, 400)
-
-    if 'name' in data:
-        try:
-            name = validate_category_name(data['name'])
-        except ValueError as e:
-            return build_json_error_response(response, e, 400)
-    
-    try:
-        new_category = Category(name=name)
-        new_category.full_clean()
-        new_category.save()
+        name = validate_model_object_unique_name(data['name'], Category, 'category')
+        new_category = validate_and_save_model_object(Category(name=name))
         return build_json_response(response, serialize_category(new_category), 201)
-    except ValidationError as e:
+
+    except (ValueError, FieldValidationError, ObjectValidationError) as e:
         return build_json_error_response(response, e, 400)
-    except Category.DoesNotExist as e:
-        return build_json_error_response(response, e, 404)
 
 
 
 def update_category(request, response, category_id):
     """
-    Use request body data given to UPDATE the category based on category_id given
+    Use request body data given to UPDATE the brand based on brand_id given
     """
     try:
         data = validate_request_body(request)
-    except ValueError as e:
-        return build_json_error_response(response, e, status=400)
+        category = validate_model_object_id(category_id, Category, 'category')
 
-    if 'name' in data:
-        try:
-            name = validate_category_name(data['name'])
-        except ValueError as e:
-            return build_json_error_response(response, e, 400)
-    
-    try:
-        category = Category.objects.get(id=category_id)
-        category.name = name
-        category.full_clean()
-        category.save()
+        if 'name' in data:
+            name = validate_model_object_unique_name(data['name'], Category, 'category')
+            category.name = name
+
+        category = validate_and_save_model_object(category)
         return build_json_response(response, serialize_category(category), 200)
 
-    except ValidationError as e:
+    except (ValueError, FieldValidationError, ObjectValidationError) as e:
         return build_json_error_response(response, e, 400)
-    except Category.DoesNotExist as e:
+    except NotFoundValidationError as e:
         return build_json_error_response(response, e, 404)

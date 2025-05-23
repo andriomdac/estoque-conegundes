@@ -1,0 +1,3 @@
+# TESTAR ENDPOINT DE PRODUTOS
+
+# CONTINUAR A REFATORAR: FALTAM -> sale_items, sales e store_items
