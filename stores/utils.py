@@ -5,7 +5,6 @@ from .serializers import serialize_store
 from app.utils.http import build_json_response, build_json_error_response
 from django.core.validators import ValidationError
 from app.utils.validators import validate_request_body
-from app.utils.exceptions import DuplicateStoreException
 from stores.validators import validate_store_name
 
 

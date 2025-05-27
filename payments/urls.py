@@ -7,4 +7,5 @@ from payments.views import (
 urlpatterns = [
     path('', payment_method_value_create_list_view, name='payment_method_create_list'),
     path('<int:payment_method_id>/', payment_method_value_detail_delete_view, name='payment_method_detail_delete'),
+
 ]

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+
+class SaleItemAdmin(admin.ModelAdmin):
+    list_display = ["store_item", "sale", "created_at", "updated_at",]

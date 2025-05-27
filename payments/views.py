@@ -1,8 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
-from app.utils.db_ops import serialize_model_list, get_model_object_detail, delete_model_object
+from app.utils.db_ops import serialize_model_list, get_model_object_detail
 from .models import PaymentMethodValue
 from .serializers import serialize_payment_method
-from .utils import create_new_payment_method_value
+from .utils import create_new_payment_method_value, delete_payment_method_value
 
 
 @csrf_exempt
@@ -32,7 +32,7 @@ def payment_method_value_detail_delete_view(request, payment_method_id):
         return get_model_object_detail(response, payment_method_id, PaymentMethodValue, serialize_payment_method, 'payment method')
 
     if request.method == 'DELETE':
-        return delete_model_object(response, payment_method_id, PaymentMethodValue, 'payment method')
+        return delete_payment_method_value(response, payment_method_id, PaymentMethodValue, 'payment method')
 
     return method_not_allowed(response)
     

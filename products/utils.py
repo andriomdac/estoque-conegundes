@@ -64,5 +64,7 @@ def update_product(request, response, product_id):
         product = validate_and_save_model_object(product)
         return build_json_response(response, serialize_product(product), 200)
 
-    except ValueError as e:
+    except (ValueError, FieldValidationError, ObjectValidationError) as e:
         return build_json_error_response(response=response, message=e, status=400)
+    except NotFoundValidationError as e:
+        return build_json_error_response(response, e, 404)

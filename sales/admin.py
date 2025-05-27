@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+
+class SaleAdmin(admin.ModelAdmin):
+    list_display = ["total_amount", "created_at", "updated_at",]

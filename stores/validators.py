@@ -1,5 +1,4 @@
 from .models import Store
-from app.utils.exceptions import DuplicateStoreException
 
 
 def validate_store_name(name):

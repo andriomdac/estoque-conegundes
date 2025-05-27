@@ -1,17 +1,12 @@
 from store_items.models import StoreItem
+from app.utils.validators import validate_and_save_model_object
+from app.utils.http import build_json_error_response, build_json_response
+from app.utils.exceptions import FieldValidationError
 
 
-def validate_store_item(store_item):
+def validate_and_save_store_item(store_item):  
     if StoreItem.objects.filter(store=store_item.store, product=store_item.product).exists():
-        raise ValueError(f"store '{store_item.store.pk}' already has this product '{store_item.product.pk}'")
-    return store_item
-
-def validate_store_item_id(store_item_id):
-    try:
-        store_item_id = int(store_item_id)
-        store_item  = StoreItem.objects.get(id=store_item_id)
-    except( TypeError, ValueError):
-        raise ValueError("store item (ID) must be an integer.")
-    except StoreItem.DoesNotExist:
-        raise StoreItem.DoesNotExist(f"store item '{store_item_id}' does not exist.'")
-    return store_item
+        raise FieldValidationError(
+            f"store '{store_item.store.pk}' already have the product '{store_item.product.pk}'."
+        )
+    return validate_and_save_model_object(store_item)
