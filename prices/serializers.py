@@ -1,4 +1,4 @@
-from store_items.serializers import serialize_store_item
+from store_items.serializers import serialize_basic_store_item
 
 def serialize_price(price):
     """
@@ -6,7 +6,7 @@ def serialize_price(price):
     """
     return {
         "id": price.pk,
-        "store_item": serialize_store_item(price.store_item),
+        "store_item": serialize_basic_store_item(price.store_item),
         "cost_price": price.cost_price,
         "selling_price": price.selling_price,
         "created_at": price.created_at,
