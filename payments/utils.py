@@ -35,6 +35,8 @@ def create_new_payment_method_value(request, response):
                 total_amount=total_amount
                 )
              )
+        
+        # Update the sale total amount when a payment is successfuly deleted
         update_sale_total_amount(sale)
         return build_json_response(response, serialize_payment_method(new_payment), 201)
 
