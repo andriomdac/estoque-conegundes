@@ -8,6 +8,7 @@ def serialize_sale(sale):
     """
     return {
         "id": sale.pk,
+        "active": sale.active,
         "total_amount": sale.total_amount,
         "created_at": sale.created_at,
         "updated_at": sale.updated_at,
