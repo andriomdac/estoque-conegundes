@@ -1,1 +1,0 @@
---> verify JWToken in every request on all views.
