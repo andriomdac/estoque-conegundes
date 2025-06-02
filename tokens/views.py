@@ -30,7 +30,10 @@ def get_token_view(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 exp = datetime.now() + timedelta(seconds=60)
-                payload = {"exp": exp.timestamp()}
+                payload = {
+                    "exp": exp.timestamp(),
+                    "sub": f"{user.pk}"
+                    }
                 token = jwt.encode(payload=payload, key=JWT_SECRET_KEY, algorithm="HS256")
                 data = {"token": token}
 
