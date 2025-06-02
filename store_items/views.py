@@ -8,9 +8,11 @@ from store_items.utils import (
     create_new_store_item,
     update_store_item,
     )                                             
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def store_item_create_list_view(request):
     response = []
 
@@ -26,6 +28,7 @@ def store_item_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def store_item_update_detail_delete_view(request, store_item_id):
     """
     GET, UPDATE or DELETE a store_item

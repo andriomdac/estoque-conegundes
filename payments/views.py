@@ -3,9 +3,11 @@ from app.utils.db_ops import serialize_model_list, get_model_object_detail
 from .models import PaymentMethodValue
 from .serializers import serialize_payment_method
 from .utils import create_new_payment_method_value, delete_payment_method_value
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def payment_method_value_create_list_view(request):
     """
     GET list of payment_methods or POST a new payment_method
@@ -22,6 +24,7 @@ def payment_method_value_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def payment_method_value_detail_delete_view(request, payment_method_id):
     """
     GET, UPDATE or DELETE a payment_method

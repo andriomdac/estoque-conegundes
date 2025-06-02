@@ -6,9 +6,11 @@ from .serializers import serialize_price
 from .utils import (
     create_new_price,
     )                                                                                    
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def price_create_list_view(request):
     response = []
 
@@ -23,6 +25,7 @@ def price_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def price_detail_delete_view(request, price_id):
     """
     GET, UPDATE or DELETE a price

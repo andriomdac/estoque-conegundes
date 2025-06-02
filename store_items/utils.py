@@ -1,14 +1,10 @@
 import json
-#Models
 from .models import StoreItem
 from products.models import Product
 from categories.models import Category
 from stores.models import Store
-#Serializers
 from .serializers import serialize_store_item
-#Responses
 from app.utils.http import build_json_error_response, build_json_response
-#Validators
 from app.utils.validators import (
     validate_request_body,
     validate_and_save_model_object,

@@ -6,9 +6,11 @@ from .serializers import serialize_sale, serialize_basic_sale
 from .utils import create_new_sale, finalize_sale, activate_sale
 from app.utils.db_ops import get_model_object_detail, delete_model_object, serialize_model_list
 from app.utils.http import method_not_allowed
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def sale_create_list_view(request):
     """
     GET list of sales or POST a new sale
@@ -25,6 +27,7 @@ def sale_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def sale_detail_delete_view(request, sale_id):
     """
     GET, UPDATE or DELETE a sale
@@ -41,7 +44,9 @@ def sale_detail_delete_view(request, sale_id):
 
 from icecream import ic
 
+
 @csrf_exempt
+@token_required
 def sale_activate_view(request, sale_id):
     response = []
 
@@ -52,6 +57,7 @@ def sale_activate_view(request, sale_id):
 
 
 @csrf_exempt
+@token_required
 def sale_finalize_view(request, sale_id):
     response = []
 

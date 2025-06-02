@@ -3,6 +3,7 @@ from decimal import InvalidOperation, Decimal, ROUND_HALF_UP
 from app.utils.exceptions import FieldValidationError, NotFoundValidationError, ObjectValidationError
 from django.core.validators import ValidationError
 
+
 def validate_request_body(request, required_fields=None):
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -56,3 +57,9 @@ def validate_and_save_model_object(object):
             return object
         except ValidationError as e:
             raise ObjectValidationError(e.message_dict)
+
+
+def validate_str_value_field(value_field, field_name):
+    if not isinstance(value_field, str):
+        raise FieldValidationError(f"field {field_name} must be a string.")
+    return value_field

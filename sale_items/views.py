@@ -4,9 +4,11 @@ from .models import SaleItem
 from .serializers import serialize_sale_item
 from app.utils.http import method_not_allowed
 from .utils import create_new_sale_item
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def sale_item_create_list_view(request):
     """
     GET list of sale_items or POST a new sale_item
@@ -23,6 +25,7 @@ def sale_item_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def sale_item_update_detail_delete_view(request, sale_item_id):
     """
     GET, UPDATE or DELETE a sale_item

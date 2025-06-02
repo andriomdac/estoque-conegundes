@@ -1,3 +1,1 @@
-
-# UPDATE SALE ON DELETE PAYMENT METHOD VALUE
-# PAYMENT METHOD VALUE
+--> verify JWToken in every request on all views.

@@ -16,9 +16,11 @@ from app.utils.db_ops import (
     serialize_model_list,
     get_model_object_detail,
 )
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def category_create_list_view(request):
     """
     GET list of categories or POST a new category
@@ -35,6 +37,7 @@ def category_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def category_update_detail_delete_view(request, category_id):
     """
     GET, UPDATE or DELETE a category

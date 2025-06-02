@@ -17,9 +17,11 @@ from app.utils.http import (
     get_json_from_request_body,
     method_not_allowed
 )
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def product_create_list_view(request):
     """
     GET list of products or POST a new product
@@ -36,6 +38,7 @@ def product_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def product_update_detail_delete_view(request, product_id):
     """
     GET, UPDATE or DELETE a product

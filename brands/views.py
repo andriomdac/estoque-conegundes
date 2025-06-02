@@ -16,9 +16,12 @@ from app.utils.db_ops import (
     serialize_model_list,
     get_model_object_detail,
 )
+from tokens.utils import verify_token
+from tokens.decorators import token_required
 
 
 @csrf_exempt
+@token_required
 def brand_create_list_view(request):
     """
     GET list of brands or POST a new brand
@@ -35,6 +38,7 @@ def brand_create_list_view(request):
 
 
 @csrf_exempt
+@token_required
 def brand_update_detail_delete_view(request, brand_id):
     """
     GET, UPDATE or DELETE a brand
