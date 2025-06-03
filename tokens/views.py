@@ -41,7 +41,6 @@ def get_token_view(request):
             
             return build_json_error_response(response, "invalid credentials")
 
-            return build_json_response(response)
         except (ValueError, FieldValidationError) as e:
             return build_json_error_response(response, e, 400)
     return method_not_allowed(response)
@@ -57,4 +56,4 @@ def verify_token_view(request):
             response=response
             )
 
-    return method_not_allowed
+    return method_not_allowed(response)
