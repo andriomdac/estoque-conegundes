@@ -28,20 +28,18 @@
 
 <body>
 
-    {% include "components/_sidebar.html" %}
-    {% include "components/_navbar.html" %}
-
-    <!-- Main content block -->
-    <div class="container-fluid page-body-wrapper">
+    <div class="container-scroller">
+      {% include "components/_sidebar.html" %}
+      <div class="container-fluid page-body-wrapper">
+        {% include "components/_navbar.html" %}
         <div class="main-panel">
-            <div class="content-wrapper">
-                {% block content %}
-                {% endblock %}
-            </div>
+          <div class="content-wrapper">
+            {% block content %} {% endblock %}
+          </div>
+          {% include "components/_footer.html" %}
         </div>
+      </div>
     </div>
-
-    {% include "components/_footer.html" %}
 
     <!-- plugins:js -->
     <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
