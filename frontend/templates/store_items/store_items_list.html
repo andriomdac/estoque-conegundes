@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Itens da Loja</h4>
+        <p class="card-description">
+            Lista de itens disponíveis nas lojas
+        </p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Código de Barras</th>
+                        <th>Categoria</th>
+                        <th>Marca</th>
+                        <th>Loja</th>
+                        <th>Quantidade</th>
+                        <th>Preço de Venda</th>
+                        <th>Ativo</th>
+                        <th>Atualizado em</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in store_items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.barcode }}</td>
+                        <td>{{ item.category.name }}</td>
+                        <td>{{ item.product.brand.name }}</td>
+                        <td>{{ item.store.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            {% if item.selling_price %}
+                                R$ {{ item.selling_price }}
+                            {% else %}
+                                Não definido
+                            {% endif %}
+                        </td>
+                        <td>{{ item.active }}</td>
+                        <td>{{ item.updated_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

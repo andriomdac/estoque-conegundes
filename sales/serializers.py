@@ -30,8 +30,8 @@ def serialize_basic_sale(sale):
     return {
         "id": sale.pk,
         "total_amount": sale.total_amount,
-        "created_at": sale.created_at,
-        "updated_at": sale.updated_at,
+        "created_at": sale.created_at.strftime("%d-%m-%Y %H:%M:%S"),
+        "updated_at": sale.updated_at.strftime("%d-%m-%Y %H:%M:%S"),
         "payments": payments,
         "sale_items": sale.sale_items.all().count()
 

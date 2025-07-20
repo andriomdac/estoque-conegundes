@@ -10,7 +10,7 @@ def serialize_store_item(store_item, exclude_fields=[]):
     data = {
         "id": store_item.pk,
         "product": serialize_product(store_item.product),
-        "selling_price": "no price",
+        "selling_price": None,
         "store": serialize_store(store_item.store),
         "category": serialize_category(store_item.category),
         "quantity": store_item.quantity,

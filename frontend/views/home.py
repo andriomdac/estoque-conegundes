@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from .auth import verify_session_token
+from django.shortcuts import render, redirect
 from icecream import ic
+from frontend.utils.decorators import token_required
 
 
+@token_required
 def home(request):
-    ic(verify_session_token(request, request.session.get('jwt')))
+    ic(request.session.get('token'))
     return render(request, "base.html")

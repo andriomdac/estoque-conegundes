@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Vendas</h4>
+        <p class="card-description">
+            Lista de vendas realizadas
+        </p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Itens</th>
+                        <th>Total</th>
+                        <th>Pagamentos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.id }}</td>
+                        <td>{{ sale.created_at }}</td>
+                        <td>{{ sale.sale_items }}</td>
+                        <td>R$ {{ sale.total_amount }}</td>
+                        <td>
+                            {% if sale.payments %}
+                                {% for method, value in sale.payments.items %}
+                                    {{ method }}: R$ {{ value }}<br>
+                                {% endfor %}
+                            {% else %}
+                                Nenhum
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
